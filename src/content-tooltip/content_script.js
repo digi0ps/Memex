@@ -1,6 +1,6 @@
 import { bodyLoader } from 'src/util/loader'
 import * as interactions from './interactions'
-import renderUI from './react'
+import { injectCSS } from 'src/search-injection/dom'
 
 export async function init() {
     await bodyLoader()
@@ -9,9 +9,11 @@ export async function init() {
     target.setAttribute('id', 'memex-direct-linking-tooltip')
     document.body.appendChild(target)
 
-    renderUI(target)
+    const cssFile = browser.extension.getURL('/content_script.css')
+    injectCSS(cssFile)
 
-    interactions.setupTooltipTrigger(({ x, y }) => {})
+    const showTooltip = await interactions.setupUIContainer(target)
+    interactions.setupTooltipTrigger(showTooltip)
 }
 
 init()
