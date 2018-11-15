@@ -37,12 +37,12 @@ export class BackupBackgroundModule {
         createQueue = Queue,
         queueOpts = { autostart: true, concurrency: 1 },
     }: {
-        storageManager: StorageManager
-        lastBackupStorage: LastBackupStorage
-        backend: BackupBackend
-        createQueue?: typeof Queue
-        queueOpts?: QueueOpts
-    }) {
+            storageManager: StorageManager
+            lastBackupStorage: LastBackupStorage
+            backend: BackupBackend
+            createQueue?: typeof Queue
+            queueOpts?: QueueOpts
+        }) {
         this.storageManager = storageManager
         this.storage = new BackupStorage({ storageManager })
         this.lastBackupStorage = lastBackupStorage
@@ -164,7 +164,7 @@ export class BackupBackgroundModule {
                     localStorage.setItem('backup.save-blobs', saveBlobs)
                 },
                 getBackupTimes: async () => {
-                    return this.getBackupTimes()
+                    return await this.getBackupTimes()
                 },
                 storeWordpressUserId: (info, userId) => {
                     localStorage.setItem('wp.user-id', userId)

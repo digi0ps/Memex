@@ -34,6 +34,10 @@ export default class BackupStorage extends FeatureStorage {
     constructor({ storageManager }: { storageManager: StorageManager }) {
         super(storageManager)
         this.registerCollections()
+
+        storageManager.on('changing', change => {
+            this._handleStorageChange(change)
+        })
     }
 
     setupChangeTracking() {
@@ -48,10 +52,10 @@ export default class BackupStorage extends FeatureStorage {
         pk,
         operation,
     }: {
-        collection: string
-        pk: string
-        operation: string
-    }) {
+            collection: string
+            pk: string
+            operation: string
+        }) {
         if (!this.recordingChanges) {
             return
         }
@@ -73,10 +77,10 @@ export default class BackupStorage extends FeatureStorage {
         pk,
         operation,
     }: {
-        collection: string
-        pk: string
-        operation: string
-    }) {
+            collection: string
+            pk: string
+            operation: string
+        }) {
         // console.log(
         //     'registering change to collection',
         //     collection,

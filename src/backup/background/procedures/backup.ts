@@ -40,11 +40,11 @@ export default class BackupProcedure {
         lastBackupStorage,
         backend,
     }: {
-        storageManager: StorageManager
-        storage: BackupStorage
-        lastBackupStorage: LastBackupStorage
-        backend: BackupBackend
-    }) {
+            storageManager: StorageManager
+            storage: BackupStorage
+            lastBackupStorage: LastBackupStorage
+            backend: BackupBackend
+        }) {
         this.storageManager = storageManager
         this.storage = storage
         this.lastBackupStorage = lastBackupStorage
