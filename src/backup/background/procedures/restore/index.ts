@@ -32,15 +32,19 @@ export class BackupRestoreProcedure {
         backend,
         logErrors = true,
     }: {
-        storageManager: StorageManager
-        storage: BackupStorage
-        backend: BackupBackend
-        logErrors?: boolean
-    }) {
+            storageManager: StorageManager
+            storage: BackupStorage
+            backend: BackupBackend
+            logErrors?: boolean
+        }) {
         this.storageManager = storageManager
         this.storage = storage
         this.backend = backend
         this.logErrors = logErrors
+    }
+
+    get running() {
+        return !!this.interruptable
     }
 
     get running() {
@@ -128,7 +132,7 @@ export class BackupRestoreProcedure {
         await search.dangerousPleaseBeSureDeleteAndRecreateDatabase()
     }
 
-    _blockDatabase() {}
+    _blockDatabase() { }
 
     async _restoreCollection(
         collection: string,
@@ -169,7 +173,7 @@ export class BackupRestoreProcedure {
         )
     }
 
-    _unblockDatabase() {}
+    _unblockDatabase() { }
 
     async _writeChange(change: ObjectChange) {
         change = _filterBadChange(change)

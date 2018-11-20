@@ -16,13 +16,11 @@ export class BackupBackgroundModule {
     storage: BackupStorage
     backend: BackupBackend
     lastBackupStorage: LastBackupStorage
-    changeTrackingQueue: Queue
+
     backupProcedure: BackupProcedure
-    backupUiCommunication = new ProcedureUiCommunication('backup-event')
+    backupUiCommunication = new ProcedureUiCommunication()
     restoreProcedure: BackupRestoreProcedure
-    restoreUiCommunication: ProcedureUiCommunication = new ProcedureUiCommunication(
-        'restore-event',
-    )
+    restoreUiCommunication: ProcedureUiCommunication = new ProcedureUiCommunication()
 
     uiTabId?: any
     automaticBackupCheck?: Promise<boolean>
