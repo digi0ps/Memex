@@ -51,14 +51,14 @@ export function handleEvent<Dependencies = null>({
     dependencies,
     actions,
 }: {
-    eventProcessor: EventProcessor<Dependencies>
-    state: { [key: string]: any }
-    setState: (updates: { [key: string]: any }) => void
-    props: { [key: string]: any }
-    event: Event
-    dependencies: Dependencies
-    actions: ActionMap
-}) {
+        eventProcessor: EventProcessor<Dependencies>
+        state: { [key: string]: any }
+        setState: (updates: { [key: string]: any }) => void
+        props: { [key: string]: any }
+        event: Event
+        dependencies: Dependencies
+        actions: ActionMap
+    }) {
     const result = eventProcessor({ state, event, dependencies })
     if (result.updateState) {
         setState(result.updateState)
