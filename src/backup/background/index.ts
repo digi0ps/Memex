@@ -18,9 +18,11 @@ export class BackupBackgroundModule {
     lastBackupStorage: LastBackupStorage
 
     backupProcedure: BackupProcedure
-    backupUiCommunication = new ProcedureUiCommunication()
+    backupUiCommunication = new ProcedureUiCommunication('backup-event')
     restoreProcedure: BackupRestoreProcedure
-    restoreUiCommunication: ProcedureUiCommunication = new ProcedureUiCommunication()
+    restoreUiCommunication: ProcedureUiCommunication = new ProcedureUiCommunication(
+        'restore-event',
+    )
 
     uiTabId?: any
     automaticBackupCheck?: Promise<boolean>
