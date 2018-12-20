@@ -13,10 +13,10 @@ export class DownloadQueue {
         fetcher = fetch,
         concurrency = 1,
     }: {
-        items: any[]
-        fetcher: Fetcher
-        concurrency?: number
-    }) {
+            items: any[]
+            fetcher: Fetcher
+            concurrency?: number
+        }) {
         this.items = items
         this.fetcher = fetcher
         this.concurrency = concurrency
