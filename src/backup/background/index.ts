@@ -121,9 +121,10 @@ export class BackupBackgroundModule {
                 },
                 setBackendLocation: async (info, location?: string) => {
                     if (
-                        location === 'gdrive' &&
+                        location === 'google-drive' &&
                         this.backendLocation !== location
                     ) {
+                        this.backendLocation = location
                         this.backend = await this.backendSelect.initGDriveBackend()
                     } else if (
                         location === 'local' &&
@@ -135,11 +136,11 @@ export class BackupBackgroundModule {
                     this.setupRequestInterceptor()
                     this.initBackendDependants()
                 },
+                getBackendLocation: async info => {
+                    return this.backendLocation
+                },
                 isBackupAuthenticated: async () => {
                     return this.backend ? this.backend.isAuthenticated() : false
-                },
-                isBackupConnected: async () => {
-                    return this.backend ? this.backend.isConnected() : false
                 },
                 maybeCheckAutomaticBakupEnabled: async () => {
                     if (
