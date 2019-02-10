@@ -10,9 +10,10 @@ import { remoteFunction } from 'src/util/webextensionRPC'
 //     redirectToAutomaticBackupPurchase,
 //     redirectToAutomaticBackupCancellation,
 // } from '../utils'
-import { PrimaryButton } from '../components/primary-button'
+import SmallButton from '../components/small-button'
 import LoadingBlocker from '../components/loading-blocker'
 import RestoreConfirmation from '../components/restore-confirmation'
+import { browser } from 'webextension-polyfill-ts'
 
 const styles = require('../styles.css')
 const localStyles = require('./overview.css')
@@ -163,15 +164,28 @@ export default class OverviewContainer extends React.Component<Props> {
                     </div>
                 ): (
                     <div>
+                    {/* The status line with last backup time */}
                     <div className={localStyles.statusLine}>
-                        <span className={styles.name}>Last backup: </span>
-                        <span className={localStyles.time}>
-                            {this.state.backupTimes.lastBackup
-                                ? moment(
-                                    this.state.backupTimes.lastBackup,
-                                ).fromNow()
-                                : "You haven't made any backup yet"}
-                        </span>
+                        <div>
+                            <span className={localStyles.boldText}>
+                                Last backup:{' '}
+                            </span>
+                            <span className={localStyles.time}>
+                                {this.state.backupTimes.lastBackup
+                                    ? moment(
+                                        this.state.backupTimes.lastBackup,
+                                    ).fromNow()
+                                    : "You haven't made any backup yet"}
+                            </span>
+                        </div>
+                        <SmallButton
+                            color="green"
+                            onClick={this.props.onBackupRequested}
+                        >
+                            {this.state.backupTimes.nextBackup !== 'running'
+                                ? 'Backup Now'
+                                : 'Go to Backup'}
+                        </SmallButton>
                     </div>
                     {this.state.backupTimes.nextBackup && (
                         <div className={localStyles.statusLine}>
@@ -188,11 +202,6 @@ export default class OverviewContainer extends React.Component<Props> {
                             </span>
                         </div>
                     )}
-                    <PrimaryButton onClick={this.props.onBackupRequested}>
-                        {this.state.backupTimes.nextBackup !== 'running'
-                            ? 'Backup Now'
-                            : 'Go to Backup'}
-                    </PrimaryButton>
                 </div>
                 )}
                 <div>
@@ -203,22 +212,16 @@ export default class OverviewContainer extends React.Component<Props> {
                         <span className={styles.name}>
                             Restore &amp; Replace
                         </span>
-                        <a
+                        <SmallButton
                             onClick={() =>
                                 this.setState({ showRestoreConfirmation: true })
                             }
+                            color="green"
+                            extraClass={localStyles.button}
                         >
-                            <span className={localStyles.button}>
-                                <span
-                                    className={classNames(
-                                        styles.label,
-                                        styles.labelFree,
-                                    )}
-                                >
-                                    RESTORE
-                                </span>
-                            </span>
-                        </a>
+                            Restore
+                        </SmallButton>
+
                         <br />
                         <span
                             className={classNames(
@@ -232,7 +235,20 @@ export default class OverviewContainer extends React.Component<Props> {
                     </div>
                     <div className={styles.option}>
                         <span className={styles.name}>Restore &amp; Merge</span>
-                        <a
+                        <SmallButton
+                            onClick={() =>
+                                browser.tabs.create({
+                                    url:
+                                        'https://worldbrain.io/crowdfunding-memex',
+                                    active: true,
+                                })
+                            }
+                            extraClass={localStyles.button}
+                            color="white"
+                        >
+                            Contribute
+                        </SmallButton>
+                        {/* <a
                             target="_blank"
                             href="https://worldbrain.io/crowdfunding-memex"
                         >
@@ -246,7 +262,7 @@ export default class OverviewContainer extends React.Component<Props> {
                                     CONTRIBUTE
                                 </span>
                             </span>
-                        </a>
+                        </a> */}
                         <br />
                         <span
                             className={classNames(
